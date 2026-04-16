@@ -1,0 +1,70 @@
+import React, { useState, useEffect } from "react";
+import { Search } from "lucide-react";
+import { Button } from "@base-ui/react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchJobByText, setSelectedLocation, setSelectedIndustry, setSelectedSalary } from "@/redux/jobSlice";
+import { useNavigate } from "react-router-dom";
+
+function HeroSection() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { searchJobByText } = useSelector(store => store.job);
+
+  // Clear all filters when component mounts (when user returns to home page)
+  useEffect(() => {
+    dispatch(setSearchJobByText(""));
+    dispatch(setSelectedLocation(""));
+    dispatch(setSelectedIndustry(""));
+    dispatch(setSelectedSalary(""));
+    setSearchQuery("");
+  }, [dispatch]);
+
+  const searchHandler = () => {
+    dispatch(setSearchJobByText(searchQuery));
+    navigate("/jobs");
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      searchHandler();
+    }
+  };
+
+  return (
+    <div className="text-center">
+      <div className="flex flex-col gap-5 my-10">
+        <span className="mx-auto px-4 py-2 rounded-full bg-gray-100 text-[#F83002] font-medium">
+          No. 1 Job Hunt Website
+        </span>
+        <h1 className="text-5xl font-bold mt-4">
+          Search, Apply & <br />
+          Get Your <span className="text-[#6A38C2]">Dream Jobs</span>
+        </h1>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo et
+          sunt reiciendis voluptas? Amet, laudantium.
+        </p>
+        <div className="flex w-[40%] mx-auto items-center bg-white border border-gray-200 rounded-full shadow-md overflow-hidden">
+          <input
+            type="text"
+            placeholder="Find your dream jobs"
+            className="flex-1 px-5 py-3 outline-none "
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyPress={handleKeyPress}
+          />
+
+          <button 
+            onClick={searchHandler}
+            className="bg-[#6A38C2] p-3 rounded-full m-1 flex items-center justify-center hover:bg-black"
+          >
+            <Search className="text-white h-5 w-5" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default HeroSection;
