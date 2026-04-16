@@ -6,6 +6,10 @@ import { Toaster } from "./components/ui/sonner";
 import { Provider } from "react-redux";
 import store, { persistor } from "./redux/store.js";
 import { PersistGate } from "redux-persist/integration/react";
+import axios from "axios";
+
+// Configure axios to send cookies with requests
+axios.defaults.withCredentials = true;
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
