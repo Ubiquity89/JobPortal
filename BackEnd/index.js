@@ -10,7 +10,7 @@ import companyRoute from "./routes/company.route.js";
 import jobRoute from "./routes/job.route.js";
 import applicationRoute from "./routes/application.route.js";
 
-dotenv.config({});
+dotenv.config();
 
 const app = express();
 
@@ -18,9 +18,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
+const allowedOrigins = ["http://localhost:5173", "http://localhost:5174",
+  "https://job-portal-olive-eight.vercel.app"
+];
 const corsOptions = {
-  origin: true, // allow all for now
+  origin: allowedOrigins, // allow all for now
   credentials: true,
 };
 app.use(cors(corsOptions));
